@@ -197,9 +197,79 @@ namespace DIFrame {
      using figure_differences = typename figure_differences_impl<P1, P2>::type;
 
      //********************
+     //Now we need to add some new functions about INJECT
      
-     
+     //********************
+     //To check whether the type T can be constructed with parm<P...>
+     template <typename T, typename P>
+     struct is_constructible_from_parm {};
 
+     template <typename T, typename... Ps>
+     struct is_constructible_from_parm <T, parm<Ps...>> : public std::is_constructible<T, Ps...> {};
+
+     //********************
+     //To trait the SIGNATURE 
+     template <typename signature>
+     struct trait_signature {
+         static_assert( false && sizeof(signature), "not a signature" );
+     }; 
+     
+     template <typename C, typename... Ps>
+     struct trait_signature <C(Ps...)> {
+         using type = C;
+         using args = parm<Ps...>;
+     };
+
+    template <typename signature>
+    using signatureType = typename trait_signature<signature>::type;
+
+    template <typename signature>
+    using signatureArgs = typename trait_signature<signature>::args;
+
+    //********************
+    //To construct the signature
+    //
+    template <typename C, typename P>
+    struct construct_signature_impl {};
+
+    template <typename C, typename... Ps>
+    struct costruct_signature_impl <C, parm<Ps...>> {
+        using type = C(Ps...);
+    };
+
+    template <typename C, typename P>
+    using construct_signature = typename construct_signature_impl<C, P>::type;
+
+    //********************
+    //The struct to provide the constructor
+    template <typename signature>
+    struct provide_construct {};
+
+    template <typename C, typename... Ps>
+    struct provide_construct <C(Ps...)> {
+        static C* f(Ps... parameters) {
+            static_assert( !std::is_pointer<C>::value, "The C cannot be a pointer"  );
+            static_assert( std::is_constructible<C, Ps...>::value, "The parameters cannot construct this constructor"  );
+            return new C(std::forward<Ps>(parameters)...);
+        }
+    };    
+
+    //********************
+    //Similar to the above, but the factory method
+    template <typename signature>
+    struct provide_factory_construct {};
+
+    template <typename C, typename... Ps>
+    struct provide_factory_construct <C(Ps...)> {
+        static C f(Ps... parameters) {
+            static_assert( !std::is_pointer<C>::value, "The C cannot be a pointer" );
+            static_assert( std::is_constructible<C, Ps...>::value, "The parameters cannot construct this constructor"  );
+            return C(std::forward<Ps>(parameters)...); 
+        }
+    };
+
+   //********************
+   // 
     } //namespace utils
 } //namespace DIFrame
 
