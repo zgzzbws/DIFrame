@@ -5,10 +5,14 @@
 
 namespace DIFrame {
 
+    template <typename T>
+    struct Assisted;
+
     namespace utils {
+       
+        
 
-    }
-
+    } //utils
 }  //DIFrame
 
-#endif
+#endif //ASSISTED_IDEN_UTILS_H

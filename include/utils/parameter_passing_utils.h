@@ -129,7 +129,7 @@ namespace DIFrame {
        struct parm_in_list {};
 
        template <typename T, typename... Ts>
-       struct parm_in_list <T, parm<Ts...>> : public static_or<std::is_same<T, Ts>::value...> {}; 
+       struct parm_in_list <T, parm<Ts...>> : public logic_or<std::is_same<T, Ts>::value...> {}; 
         
        //********************
        //If the parameter list is empty
