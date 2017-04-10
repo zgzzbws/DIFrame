@@ -11,6 +11,58 @@ namespace DIFrame {
         struct parm { };
         
         //********************
+        //To obtain the size of parm
+        template <typename P>
+        struct parm_size {};
+
+        template <typename... Ps>
+        struct parm_size <parm<Ps...>> {
+            static constexpr int value = sizeof...(Ps); 
+        };
+
+        //********************
+        //To wrap the parm with the specific class
+        template <template<typename T> class W, typename P>
+        struct wrap_parms_impl {};
+
+        template <template <typename T> class W, typename... Ps>
+        struct wrap_parms_impl <W, parm<Ps...>> {
+            using type = parm<W<Ps>...>;
+        };
+
+        template <template<typename T> class W, typename P>
+        using wrap_parms = typename wram_parms_impl<W, P>::type; 
+
+        //********************
+        //To wrap the parm with the pointer
+        template <typename P>
+        struct add_pointer_impl {};
+
+        template <typename... Ps>
+        struct add_pointer_impl <parm<Ps...>> {
+            using type = parm<Ps*...>;
+        };
+
+        template <typename P>
+        struct add_pointer = typename add_pointer_impl<P>::type;
+
+        //********************
+        //To obtain the Nth type in the parameter lists
+        template <int n, typename P>
+        struct get_nth_type_impl{};
+
+        template <typename T, typename... Ps>
+        struct get_nth_type_impl <0, parm<T, Ps...>> {
+            using type = T;
+        }; 
+
+        template <int n, typename T, typename... Ps>
+        struct get_nth_type_impl <n, parm<T, Ps...>> : public get_nth_type_impl<n-1, parm<Ps...>> {};
+
+        template <int n, typename P>
+        using get_nth_type = typename get_nth_type_impl<n, P>::type;
+
+        //********************
         //To judge whether the parameter list has one or multi-parameters
         //If there is just one parameter in the parameter list
         template <typename T>
@@ -269,8 +321,33 @@ namespace DIFrame {
     };
 
    //********************
-   // 
+   //To judge whether the type is function
+   template <typename T>
+   struct is_function : public std::false_type {};
+
+   template <typename T, typename... Ps>
+   struct is_function <std::function<T(Ps...)>> : public true_type {}; 
+
+   //********************
+   //int parameters
+   template <int...>
+   struct int_parms {};
+
+   template <int n, int... ns>
+   struct generate_int_lists_impl : public generate_int_lists_impl<n-1, n-1, ns...> {};
+
+   template <int... ns>
+   struct generate_int_lists_impl<0, ns...> {
+       using type = int_parms<ns...>;
+   };
+
+   template <int n>
+   using generate_int_lists = typename generate_int_lists_impl<n>::type; 
+
+   template <typename F, typename... Ps>
+   using functor_result = typename std::remove_reference<decltype(F()(std::declval<Ps>()...))>::type;
+ 
     } //namespace utils
 } //namespace DIFrame
 
-#endif
+#endif //PARAMETER_PASSING_H
