@@ -1,0 +1,4 @@
+#ifndef DIFRAME_MODULE_H
+#define DIFRAME_MODULE_H
+
+#endif // DIFRAME_MODULE_H

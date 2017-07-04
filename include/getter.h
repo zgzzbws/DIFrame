@@ -1,0 +1,4 @@
+#ifndef DIFRAME_GETTER_H
+#define DIFRAME_GETTER_H
+
+#endif // DIFRAME_GETTER_H
