@@ -4,16 +4,16 @@
 namespace DIFrame {
 
     template<typename... Types>
-    struct Dependency;
+    class Container;
 
     template<typename Type>
-    struct Assisted;
+    struct Assist;
+
+    template<typename... Types>
+    struct Dependency;
 
     template<typename... Types>
     class Get;
-
-    template<typename... Types>
-    class Container;
 
 }
 
