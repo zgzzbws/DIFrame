@@ -2,28 +2,23 @@
 #define DIFRAME_GETTER_H
 
 #include "container.h"
+#include "storage.h"
 
 namespace DIFrame {
     
     template<typename... Types>
-    class Get {
-    private:
-
+    class Get : public Storage<Types...> {
     public:
+
         Get() = delete;
         Get( const Get& ) = delete;
+        
         Get( Get&& ) = default;
 
-        Get( const Cont& cont );
-        Get( Cont&& cont );
-
-        template <typename T>
-        T obtain();
-
-        template <typename T>
-        explicit operator T();
+        Get( const Container<Types...>& container );
+        Get( Container<Types...>&& container );
     };
 
-}
+} // namespace DIFrame
 
 #endif // DIFRAME_GETTER_H
