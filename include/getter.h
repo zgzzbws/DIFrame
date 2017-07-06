@@ -30,12 +30,6 @@ namespace util {
         template <typename T>
         friend struct fruit::util::GetHelper;
 
-        template <typename T>
-        T obtain();
-
-        template <typename T>
-        explicit operator T();
-
     public:
 
         Get() = delete;
@@ -45,6 +39,12 @@ namespace util {
 
         Get( const Container<Types...>& container );
         Get( Container<Types...>&& container );
+
+        template <typename T>
+        T obtain();
+
+        template <typename T>
+        explicit operator T();
     };
 
 } // namespace DIFrame
