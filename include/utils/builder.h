@@ -1,6 +1,12 @@
 #ifndef DIFRAME_BUILDER_H
 #define DIFRAME_BUILDER_H
 
+
+
+#include <vector>
+#include <unordered_map>
+#include <set>
+
 namespace DIFrame {
 namespace utils {
 
@@ -26,10 +32,7 @@ namespace utils {
         };
 
         //A series of operation about BuildType
-        //To get the BuildType
-        template <typename T>
-        BuildType& getBuildType();
-
+        
         //To create the BuildType
         //Method 1
         void createBuildType( TypeIndex typeIndex, void* ParamsForCreate, void* (*create)(Build&, void*), void (*destroy)(void*) );
@@ -47,6 +50,10 @@ namespace utils {
         //Method 4
         template <typename T>
         void createBuildType( void* Instance, void (*destroy)(void*) );
+
+        //To get the BuildType
+        template <typename T>
+        BuildType& getBuildType();
  
         //This vector stores the created BuildType (Instances)
         std::vector<BuildType> BuildTypeList;
@@ -55,10 +62,77 @@ namespace utils {
         //the corresponding Instance/BuildType
         std::unordered_map<TypeIndex, BuildType> BuildTypeMap
 
+        //The set to store the instances created by this Build
+        template <typename T>
+        static std::shared_ptr<char> thisInstanceSet( Build& build );
+
+        //Obtain the pointer from BuildType
+        template <typename T>
+        T* getPtr();
+
+        void* getPtr( TypeIndex typeIndex );
+
+        //Obtain the Instance from BuildType
+        void getInstance(TypeIndex typeIndex, BuildType& buildType);
+
+        template <typename T>
+        friend struct GetHelper;
+
+        //clear operation
+        void clear();
+
+        //
+        void swap( Build& build ) {
+            std::swap( BuildTypeMap, other.BuildTypeMap );
+            std::swap( BuildTypeList, other.BuildTypeList );
+        }
+
+    public:
+        //Constructors & Deconstructors
+        Build() = default;
+
+        Build( const Build& other ) : BuildTypeMap( other.BuildTypeMap ) {
+            //FruitCheck(other.createdSingletons.empty(), 
+            //             "Attempting to copy a component that has already started creating instances");
+        }
+
+        Build( Build&& other ) {
+            swap( other );
+        }
+  
+        Build& operator=( const Build& other );
+        Build& operator=( Build&& other );
+  
+        ~Build();
+        
+        //Bind the Instance with its interface
+        template <typename I, typename T>
+        void set();
+
+        template <typename T>
+        void setInstance( T& instance );
+
+        template <typename T, typename... Param>
+        void registerProvider( T* (*provider)(Param...), void (*deleter)(void*) );
+  
+        template <typename T, typename... Param>
+        void registerProvider( T (*provider)(Param...), void (*deleter)(void*) );
+  
+        template <typename AnnotatedSignature>
+        void registerFactory( RequiredSignatureForAssistedFactory<AnnotatedSignature>* factory );
+
+        // Note: `other' must be a pure component (no singletons created yet)
+        // while this doesn't have to be.
+        void install( const ComponentStorage& other );
+
+        template <typename T>
+        auto get() -> decltype(GetHelper<T>()(*this)) {
+            return GetHelper<T>()(*this);
+        }
 
     }
 
-}
-}
+} // namespace utils
+} // namespace DIFrame
 
 #endif // DIFRAME_BUILDER_H
