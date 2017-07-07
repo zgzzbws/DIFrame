@@ -44,16 +44,26 @@ namespace utils {
         //To create the BuildType
         //Method 3
         template <typename T>
-        void createBuildType( void* ParamsForCreate, void* (*create)(Build&, void*), void (*destroy)(void*) );
+        void createBuildType( void* ParamsForCreate, void* (*create)(Build&, void*), void (*destroy)(void*) ) {
+            createBuildType( getTypeIndex<T>(), ParamsForCreate, create, destroy );
+        }
 
         //To create the BuildType
         //Method 4
         template <typename T>
-        void createBuildType( void* Instance, void (*destroy)(void*) );
+        void createBuildType( void* Instance, void (*destroy)(void*) ) {
+            createBuildType( getTypeIndex<T>(), Instance, destroy );
+        }
 
         //To get the BuildType
         template <typename T>
-        BuildType& getBuildType();
+        BuildType& getBuildType() {
+            TypeIndex typeIndex = getTypeIndex<T>();
+            auto itr = BuildTypeMap.find( typeIndex );
+            if( itr == BuildTypeMap.end() )
+                return NULL;
+            return itr->second;
+        }
  
         //This vector stores the created BuildType (Instances)
         std::vector<BuildType> BuildTypeList;
@@ -68,7 +78,10 @@ namespace utils {
 
         //Obtain the pointer from BuildType
         template <typename T>
-        T* getPtr();
+        T* getPtr() {
+            void* p = getPtr( getTypeIndex<T>() );
+            return reinterpret_cast<T*>(p);
+        }
 
         void* getPtr( TypeIndex typeIndex );
 
@@ -106,11 +119,22 @@ namespace utils {
         ~Build();
         
         //Bind the Instance with its interface
+        //I and T shouldn't be pointers;
         template <typename I, typename T>
-        void set();
+        void set() {
+            //TODO: add the assert to gurantee I and T are pointers
+            auto createFun = []( Build& build, void* ) {
+                T* thisPtr = build.getPtr<T>();
+                I* ITypePtr = static_cast<I*>(thisPtr);
+                return reinterpret_cast<void*>(ITypePtr);
+            };
+            createBuildType<I>( nullptr, createFun, nopDeleter );
+        }
 
         template <typename T>
-        void setInstance( T& instance );
+        void setInstance( T& instance ) {
+            createBuildType<T>( &instance, nopDeleter );
+        }
 
         template <typename T, typename... Param>
         void registerProvider( T* (*provider)(Param...), void (*deleter)(void*) );
