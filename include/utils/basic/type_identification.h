@@ -12,14 +12,35 @@ namespace utils{
     template <typename T>
     struct getTypeHelper <const T> {
         using type = T;
-    }
+    };
 
     template <typename T>
     struct getTypeHelper <T&> {
         using type = T;
-    }
+    };
 
-    
+    template <typename T>
+    struct getTypeHelper <const T&> {
+        using type = T;
+    };
+
+    template <typename T>
+    struct getTypeHelper <T*> {
+        using type = T;
+    };
+
+    template <typename T>
+    struct getTypeHelper <const T*> {
+        using type = T;
+    };
+
+    template <typename T>
+    struct getTypeHelper <std::shared_ptr<T>> {
+        using type = T;
+    };
+
+    template <typename T>
+    using getType = typename getTypeHelper<T>::type;
 
 } // namespace utils
 } //namespace DIFrame
