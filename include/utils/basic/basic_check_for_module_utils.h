@@ -151,6 +151,7 @@ namespace DIFrame {
   
         template <typename sigset, typename sigsets>
         using add_to_sigset = typename add_to_sigset_impl<sigset, sigsets>::type;
+        
 
         template <typename sigset, typename otherSigsets>
         struct add_to_sigsets_impl {};
