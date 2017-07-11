@@ -1,6 +1,8 @@
 #ifndef DIFRAME_TYPE_IDENTIFICATION_H
 #define DIFRAME_TYPE_IDENTIFICATION_H
 
+#include <memory>
+
 namespace DIFrame {
 namespace utils{
 
