@@ -3,8 +3,11 @@
 
 namespace DIFrame {
 namespace utils {
-    
-    template <typename Dependency, typename Constructor, typename Signature, typename Settings>
+    //using Dep = Dependency;
+    //using Cons = Constructor;
+    //using Sig = Signature;
+    //using Set = Settings;
+    template <typename Dep, typename Cons, typename Sig, typename Set>
     class ContainerImpl {
     private:
         Build build;
@@ -13,14 +16,10 @@ namespace utils {
         ContainerImpl() = default;
         ContainerImpl( ContainerImpl&& containerImpl );
         
-        template <typename Dependency_Other, typename Constructor_Other, typename Signature_Other, typename Settings_Other>
-        ContainerImpl( const ContainerImpl<Dependency_Other, Constructor_Other, Signature_Other, Settings_Other>& ContainerImpl_Other );
+        template <typename Dep_Other, typename Cons_Other, typename Sig_Other, typename Set_Other>
+        ContainerImpl( const ContainerImpl<Dep_Other, Cons_Other, Sig_Other, Set_Other>& ContainerImpl_Other );
 
     public:
-        using Dep = Dependency;
-        using Cons = Constructor;
-        using Sig = Signature;
-        using Set = Settings;
         using This = PartialComponent<Dep, Cons, Sig, Set>;
 
     public:
