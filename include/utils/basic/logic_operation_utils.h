@@ -2,7 +2,7 @@
 #define DIFRAME_LOGIC_OPERATION_H
 
 namespace DIFrame {
-    namespace utils {
+namespace utils {
     
         //********************
         //This part is designed to achieve the operations including logic_and, login_or, logic_sum
@@ -34,7 +34,7 @@ namespace DIFrame {
             static constexpr int value = i + logic_sum<is...>::value;
         };
 
-    } //namespace utils
-} //namespace DIFrame
+} // namespace utils
+} // namespace DIFrame
 
-#endif //logic_operation_h
+#endif // DIFRAME_LOGIC_OPERATION_H

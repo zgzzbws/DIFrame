@@ -50,8 +50,8 @@ namespace std {
         typedef std::size_t result_type;
         typedef DIFrame::utils::TypeIndex argument_type;
 
-        std::size_t operator()( const DIFrame::utils::TypeIndex& typeindex ) const noexcept {
-            return typeindex.hash_code();
+        std::size_t operator()( const DIFrame::utils::TypeIndex& typeIndex ) const noexcept {
+            return typeIndex.hash_code();
         }
     };
 

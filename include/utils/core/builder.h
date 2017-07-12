@@ -76,17 +76,17 @@ namespace utils {
         template <typename T>
         static std::shared_ptr<char> thisInstanceSet( Build& build );
 
-        //Obtain the pointer from BuildType
+        //Obtain the instance from BuildType
         template <typename T>
-        T* getPtr() {
-            void* p = getPtr( getTypeIndex<T>() );
+        T* getInstance() {
+            void* p = getInstance( getTypeIndex<T>() );
             return reinterpret_cast<T*>(p);
         }
 
-        void* getPtr( TypeIndex typeIndex );
+        void* getInstance( TypeIndex typeIndex );
 
         //Obtain the Instance from BuildType
-        void getInstance(TypeIndex typeIndex, BuildType& buildType);
+        void constructInstance(TypeIndex typeIndex, BuildType& buildType);
 
         template <typename T>
         friend struct GetHelper;
