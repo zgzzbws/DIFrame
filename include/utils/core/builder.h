@@ -78,18 +78,18 @@ namespace utils {
 
         //Obtain the instance from BuildType
         template <typename T>
-        T* getInstance() {
-            void* p = getInstance( getTypeIndex<T>() );
+        T* getInstanceHelper() {
+            void* p = getInstanceHelper( getTypeIndex<T>() );
             return reinterpret_cast<T*>(p);
         }
 
-        void* getInstance( TypeIndex typeIndex );
+        void* getInstanceHelper( TypeIndex typeIndex );
 
         //Obtain the Instance from BuildType
         void constructInstance(TypeIndex typeIndex, BuildType& buildType);
 
         template <typename T>
-        friend struct GetHelper;
+        friend struct GetInstance;
 
         //clear operation
         void clear();
@@ -150,8 +150,8 @@ namespace utils {
         void install( const ComponentStorage& other );
 
         template <typename T>
-        auto get() -> decltype(GetHelper<T>()(*this)) {
-            return GetHelper<T>()(*this);
+        auto fetch() -> decltype(GetInstance<T>()(*this)) {
+            return GetInstance<T>()(*this);
         }
 
     }
