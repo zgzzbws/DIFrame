@@ -6,9 +6,10 @@
 namespace DIFrame {
 namespace utils{
 
-    //using Substitution failure is not an error (SFINAE) tech to detect
+    //using Substitution Failure Is Not An Error (SFINAE) tech to detect
     //whether the T is annotated with 'Submit'
     //'hasSubmitTypedef' is used later to register the class T
+    //use this : hasSubmitTypedef<XXX>::value 
     template <typename... Ts> 
     using void_t = void;
 
@@ -17,6 +18,22 @@ namespace utils{
 
     template <typename T>
     struct hasSubmitTypedef<T, void_t<typename T::Submit>> : std::true_type {};
+
+    //Fetch and deal with the Submit annotation
+    template <typename T>
+    struct GetSubmitTypedef {
+        using Submit = typename T::Submit;
+        using Para = SignatureArgs<Submit>;
+        //check
+
+        static constexpr bool ok = true && IsValidSignature<Submit>::value
+                                        && std::is_same<T, SignatureType<Submit>>::value
+                                        && is_constructible_with_list<C, UnlabelAssisted<A>>::value;
+   
+        using Signature = typename std::enable_if<ok, Submit>::type;
+        using Args = typename std::enable_if<ok, Para>::type;
+    }
+
 
 
 }
