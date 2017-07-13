@@ -6,6 +6,12 @@
 namespace DIFrame {
 namespace utils{
 
+    template <typename Type>
+    FetchSignature {
+        static_assert( false && sizeof(Type) , 
+                       "Error Message : The input is not a valid signature" );
+    }
+
     template <typename Type, typename... Args>
     FetchSignature <Type(Args...)> {
         using T = Type;
