@@ -21,7 +21,7 @@ namespace utils{
 
     //Fetch and deal with the Submit annotation
     template <typename T>
-    struct GetSubmitTypedef {
+    struct getSubmitTypedef {
         using Submit = typename T::Submit;
         using Para = SignatureArgs<Submit>;
         //check
