@@ -149,6 +149,7 @@ namespace utils {
         // while this doesn't have to be.
         void install( const ComponentStorage& other );
 
+        //fetch the instance from the BuildType
         template <typename T>
         auto fetch() -> decltype(GetInstance<T>()(*this)) {
             return GetInstance<T>()(*this);
