@@ -1,5 +1,5 @@
-#ifndef CONSTRUCTION_AND_JUDGEMENT_H
-#define CONSTRUCTION_AND_JUDGEMENT_H
+#ifndef DIFRAME_CONSTRUCTION_AND_JUDGEMENT_H
+#define DIFRAME_CONSTRUCTION_AND_JUDGEMENT_H
 
 #include "logic_operation_utils.h"
 
@@ -30,7 +30,7 @@ namespace utils {
 
     //
 
-}
-}
+} // namespace utils
+} // namespace DIFrame
 
-#endif // CONSTRUCTION_AND_JUDGEMENT_H
+#endif // DIFRAME_CONSTRUCTION_AND_JUDGEMENT_H

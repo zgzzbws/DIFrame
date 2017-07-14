@@ -6,8 +6,8 @@ namespace utils {
     //using Dep = Dependency;
     //using Cons = Constructor;
     //using Sig = Signature;
-    //using Set = Settings;
-    template <typename Dep, typename Cons, typename Sig, typename Set>
+    //using Set = Setting;
+    template <typename Dependency, typename Constructor, typename Signature, typename Setting>
     class ContainerImpl {
     private:
         Build build;
@@ -20,6 +20,10 @@ namespace utils {
         ContainerImpl( const ContainerImpl<Dep_Other, Cons_Other, Sig_Other, Set_Other>& ContainerImpl_Other );
 
     public:
+        using Dep = Dependency;
+        using Cons = Constructor;
+        using Sig = Signature;
+        using Set = Setting;
         using This = PartialComponent<Dep, Cons, Sig, Set>;
 
     public:
