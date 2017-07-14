@@ -24,6 +24,10 @@ namespace utils{
     template <typename Type, typename Parm>
     using append_params = typename append_params_helper<Type, Parm>::type;
 
+    //is_in_params
+
+    //remove_from_params
+
 }
 }
 
