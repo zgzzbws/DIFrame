@@ -6,6 +6,7 @@
 namespace DIFrame {
 namespace utils{
 
+    //If the parameter conform to the general case, give a error message.
     template <typename Type>
     FetchSignature {
         static_assert( false && sizeof(Type) , 
@@ -46,7 +47,7 @@ namespace utils{
 
         static constexpr bool judge = true && IsValidSignature<Submit>::value
                                            && std::is_same<T, SignatureType<Submit>>::value
-                                           && ConstructibleUsingParm<C, UnlabelAssisted<A>>::value;
+                                           && ConstructibleUsingParm<T, UnlabelAssisted<Para>>::value;
    
         using Signature = typename std::enable_if<judge, Submit>::type;
         using Args = typename std::enable_if<judge, Para>::type;
