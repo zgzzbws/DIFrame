@@ -8,8 +8,6 @@
 *     其效率瓶颈在于所使用的哈希函数
 */
 
-
-
 #include <vector>
 #include <unordered_map>
 #include <set>
@@ -38,52 +36,55 @@ namespace utils {
             bool operator < ( const DynamicBuild& other ) const;
         };
 
-        //A series of operation about BuildType
+        //A series of operation about DynamicBuild
         
-        //To create the BuildType
+        //To create the DynamicBuild
         //Method 1
-        void createBuildType( TypeIndex typeIndex, void* ParamsForCreate, void* (*create)(Build&, void*), void (*destroy)(void*) );
+        void createDynamicBuild( TypeIndex typeIndex, void* ParamsForCreate, void* (*create)(Reflections&, void*), void (*destroy)(void*) );
 
-        //To create the BuildType
+        //To create the DynamicBuild
         //Method 2
-        void createBuildType( TypeIndex typeIndex, void* Instance, void (*destroy)(void*) );
+        void createDynamicBuild( TypeIndex typeIndex, void* Instance, void (*destroy)(void*) );
 
-        //To create the BuildType
+        //To create the DynamicBuild
         //Method 3
         template <typename T>
-        void createBuildType( void* ParamsForCreate, void* (*create)(Build&, void*), void (*destroy)(void*) ) {
-            createBuildType( getTypeIndex<T>(), ParamsForCreate, create, destroy );
+        void createDynamicBuild( void* ParamsForCreate, void* (*create)(Reflections&, void*), void (*destroy)(void*) ) {
+            createDynamicBuild( getTypeIndex<T>(), ParamsForCreate, create, destroy );
         }
 
-        //To create the BuildType
+        //To create the DynamicBuild
         //Method 4
         template <typename T>
-        void createBuildType( void* Instance, void (*destroy)(void*) ) {
-            createBuildType( getTypeIndex<T>(), Instance, destroy );
+        void createDynamicBuild( void* Instance, void (*destroy)(void*) ) {
+            createDynamicBuild( getTypeIndex<T>(), Instance, destroy );
         }
 
-        //To get the BuildType
+        //To get the DynamicBuild
         template <typename T>
-        BuildType& getBuildType() {
+        DynamicBuild& getDynamicBuild() {
             TypeIndex typeIndex = getTypeIndex<T>();
-            auto itr = BuildTypeMap.find( typeIndex );
-            if( itr == BuildTypeMap.end() )
+            auto itr = DynamicBuildMap.find( typeIndex );
+            if( itr == DynamicBuildMap.end() )
                 return NULL;
             return itr->second;
         }
  
-        //This vector stores the created BuildType (Instances)
-        std::vector<BuildType> BuildTypeList;
+        //This vector stores the created DynamicBuild
+        std::vector<DynamicBuild> DynamicBuildList;
 
         //This hash map is the core component of this framework, it maps the typeid of a class/constructor with
         //the corresponding Instance/BuildType
-        std::unordered_map<TypeIndex, BuildType> BuildTypeMap
+        std::unordered_map<TypeIndex, DynamicBuild> DynamicBuildMap;
 
-        //The set to store the instances created by this Build
+        //The set to store the instances created by this Reflections
         template <typename T>
-        static std::shared_ptr<char> thisInstanceSet( Build& build );
+        static std::shared_ptr<char> thisInstanceSet( Reflections& reflections );
 
         //Obtain the instance from BuildType
+        template <typename T>
+        friend struct GetInstance;
+
         template <typename T>
         T* getInstanceHelper() {
             void* p = getInstanceHelper( getTypeIndex<T>() );
@@ -92,55 +93,52 @@ namespace utils {
 
         void* getInstanceHelper( TypeIndex typeIndex );
 
-        //Obtain the Instance from BuildType
-        void constructInstance(TypeIndex typeIndex, BuildType& buildType);
-
-        template <typename T>
-        friend struct GetInstance;
+        //??Obtain the Instance from DynamicBuild
+        void constructInstance(TypeIndex typeIndex, DynamicBuild& dynamicBuild);
 
         //clear operation
         void clear();
 
         //
-        void swap( Build& build ) {
-            std::swap( BuildTypeMap, other.BuildTypeMap );
-            std::swap( BuildTypeList, other.BuildTypeList );
+        void swap( Reflections& other ) {
+            std::swap( DynamicBuildMap, other.DynamicBuildMap );
+            std::swap( DynamicBuildList, other.DynamicBuildList );
         }
 
     public:
         //Constructors & Deconstructors
-        Build() = default;
+        Reflections() = default;
 
-        Build( const Build& other ) : BuildTypeMap( other.BuildTypeMap ) {
+        Reflections( const Reflections& other ) : DynamicBuildMap( other.DynamicBuildMap ) {
             //FruitCheck(other.createdSingletons.empty(), 
             //             "Attempting to copy a component that has already started creating instances");
         }
 
-        Build( Build&& other ) {
+        Reflections( Reflections&& other ) {
             swap( other );
         }
   
-        Build& operator=( const Build& other );
-        Build& operator=( Build&& other );
+        Reflections& operator=( const Reflections& other );
+        Reflections& operator=( Reflections&& other );
   
-        ~Build();
+        ~Reflections();
         
         //Bind the Instance with its interface
         //I and T shouldn't be pointers;
         template <typename I, typename T>
         void set() {
             //TODO: add the assert to gurantee I and T are pointers
-            auto createFun = []( Build& build, void* ) {
-                T* thisPtr = build.getPtr<T>();
+            auto createFun = []( Reflections& reflections, void* ) {
+                T* thisPtr = reflections.getInstanceHelper<T>();
                 I* ITypePtr = static_cast<I*>(thisPtr);
                 return reinterpret_cast<void*>(ITypePtr);
             };
-            createBuildType<I>( nullptr, createFun, nopDeleter );
+            createDynamicBuild<I>( nullptr, createFun, nopDeleter );
         }
 
         template <typename T>
         void setInstance( T& instance ) {
-            createBuildType<T>( &instance, nopDeleter );
+            createDynamicBuild<T>( &instance, nopDeleter );
         }
 
         template <typename T, typename... Param>
@@ -154,9 +152,9 @@ namespace utils {
 
         // Note: `other' must be a pure component (no singletons created yet)
         // while this doesn't have to be.
-        void install( const ComponentStorage& other );
+        void install( const Reflections& other );
 
-        //fetch the instance from the BuildType
+        //fetch the instance from the DynamicBuild
         template <typename T>
         auto fetch() -> decltype(GetInstance<T>()(*this)) {
             return GetInstance<T>()(*this);
