@@ -1,5 +1,12 @@
-#ifndef DIFRAME_BUILDER_H
-#define DIFRAME_BUILDER_H
+#ifndef DIFRAME_REFLECTIONS_H
+#define DIFRAME_REFLECTIONS_H
+
+/**
+*     使用一个工厂类动态创建实例对象
+*     模拟的是一个反射机制
+*     这是该框架的核心
+*     其效率瓶颈在于所使用的哈希函数
+*/
 
 
 
@@ -10,11 +17,11 @@
 namespace DIFrame {
 namespace utils {
 
-    class Build {
+    class Reflections {
     private:
 
         //This type is used for creating (if necessary), storing and deleting the instances;
-        struct BuildType {
+        struct DynamicBuild {
             //This is the instance created for the Get method
             void* Instance;
 
@@ -22,13 +29,13 @@ namespace utils {
             void* ParamsForCreate;
 
             //To create the instance
-            void* (*create)( Build&, void* );
+            void* (*create)( Reflections&, void* );
 
             //The operation to destroy the instance
             void (*destroy)(void*);
 
             //Override the operator '<'  to make the comparasion with other BuildType
-            bool operator < ( const BuildType& other ) const;
+            bool operator < ( const DynamicBuild& other ) const;
         };
 
         //A series of operation about BuildType
@@ -155,9 +162,9 @@ namespace utils {
             return GetInstance<T>()(*this);
         }
 
-    }
+    }；
 
 } // namespace utils
 } // namespace DIFrame
 
-#endif // DIFRAME_BUILDER_H
+#endif // DIFRAME_REFLECTIONS_H
