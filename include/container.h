@@ -16,6 +16,12 @@ namespace DIFrame {
         using Cons = Constructor;
         using Sig  = Signature;
         using This = ContainerImpl<Dep, Cons, Sig>;
+
+    private:
+        Reflections reflections;
+
+        ContainerImpl() = default;
+        ContainerImpl( Reflections&& reflections );
     }
 
     template <typename... Types>
