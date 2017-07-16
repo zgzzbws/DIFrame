@@ -6,6 +6,18 @@
 
 namespace DIFrame {
 
+    //using Dep = Dependency;
+    //using Cons = Constructor;
+    //using Sig = Signature;
+    template <typename Dependency, typename Constructor, typename Signature>
+    class ContainerImpl {
+    public:
+        using Dep  = Dependency;
+        using Cons = Constructor;
+        using Sig  = Signature;
+        using This = ContainerImpl<Dep, Cons, Sig>;
+    }
+
     template <typename... Types>
     class Container;
 
@@ -27,7 +39,7 @@ namespace DIFrame {
                               DIFrame::utils::Composition<DIFrame::utils::Parm<Dep...>, Par...>,
                               DIFrame::utils::Parm<>> {
         
-    }
+    };
 
 } // namespace DIFrame
 

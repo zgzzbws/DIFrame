@@ -44,6 +44,9 @@ namespace utils{
     template <typename T>
     using getType = typename getTypeHelper<T>::type;
 
+    template <typename F, typename... Args>
+    using resultOf = typename std::remove_reference<decltype(F()(std::declval<Args>()...))>::type;
+                     
 } // namespace utils
 } //namespace DIFrame
 

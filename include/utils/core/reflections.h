@@ -36,6 +36,19 @@ namespace utils {
             bool operator < ( const DynamicBuild& other ) const;
         };
 
+        //This vector stores the created DynamicBuild
+        std::vector<DynamicBuild> DynamicBuildList;
+
+        //This hash map is the core component of this framework, it maps the typeid of a class/constructor with
+        //the corresponding Instance/BuildType
+        std::unordered_map<TypeIndex, DynamicBuild> DynamicBuildMap;
+
+        //The set to store the instances created by this Reflections
+        template <typename T>
+        static std::shared_ptr<char> thisInstanceSet( Reflections& reflections );
+
+    private:
+
         //A series of operation about DynamicBuild
         
         //To create the DynamicBuild
@@ -69,17 +82,6 @@ namespace utils {
                 return NULL;
             return itr->second;
         }
- 
-        //This vector stores the created DynamicBuild
-        std::vector<DynamicBuild> DynamicBuildList;
-
-        //This hash map is the core component of this framework, it maps the typeid of a class/constructor with
-        //the corresponding Instance/BuildType
-        std::unordered_map<TypeIndex, DynamicBuild> DynamicBuildMap;
-
-        //The set to store the instances created by this Reflections
-        template <typename T>
-        static std::shared_ptr<char> thisInstanceSet( Reflections& reflections );
 
         //Obtain the instance from BuildType
         template <typename T>
