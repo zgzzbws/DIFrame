@@ -37,8 +37,8 @@ namespace utils {
         return index;
     }
 
-} //namespace utils
-} //namespace DIFrame
+} // namespace utils
+} // namespace DIFrame
 
 namespace std {
 
@@ -55,6 +55,6 @@ namespace std {
         }
     };
 
-} //namespace std
+} // namespace std
 
-#endif //DIFRAME_TYPE_INFO
+#endif // DIFRAME_TYPE_INFO
