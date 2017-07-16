@@ -6,22 +6,30 @@
 
 namespace DIFrame {
 
-    //using Dep = Dependency;
-    //using Cons = Constructor;
-    //using Sig = Signature;
+    //Dep  = Dependency;
+    //Cons = Constructor;
+    //Sig  = Signature;
     template <typename Dependency, typename Constructor, typename Signature>
     class ContainerImpl {
+    private:
+        Reflections reflections;
+
+        ContainerImpl() = default;
+
+        ContainerImpl( Reflections&& reflections );
+
+        template <typename Dep_Other, typename Cons_Other, typename Sig_Other>
+        ContainerImpl( const ContainerImpl<Dep_Other, Cons_Other, Sig_Other>& ContainerImpl_Other );
+
     public:
         using Dep  = Dependency;
         using Cons = Constructor;
         using Sig  = Signature;
         using This = ContainerImpl<Dep, Cons, Sig>;
 
-    private:
-        Reflections reflections;
+    public:
 
-        ContainerImpl() = default;
-        ContainerImpl( Reflections&& reflections );
+    
     }
 
     template <typename... Types>
@@ -32,6 +40,9 @@ namespace DIFrame {
     private:
         Container() = default;
         friend Container<> createContainer();
+
+        template <typename Dep_Other, typename Cons_Other, typename Sig_Other, typename Set_Other>
+        ContainerImpl( const ContainerImpl<Dep_Other, Cons_Other, Sig_Other, Set_Other>& ContainerImpl_Other );
 
     public:
         template <typename Cont>
@@ -46,6 +57,10 @@ namespace DIFrame {
                               DIFrame::utils::Parm<>> {
         
     };
+
+    inline Container<> createContainer() {
+        return {};
+    }
 
 } // namespace DIFrame
 
