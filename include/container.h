@@ -21,6 +21,46 @@ namespace DIFrame {
         template <typename Dep_Other, typename Cons_Other, typename Sig_Other>
         ContainerImpl( const ContainerImpl<Dep_Other, Cons_Other, Sig_Other>& ContainerImpl_Other );
 
+    private:
+        template <typename... Types>
+        friend class DIFrame::Get;
+  
+        template <typename... Types>
+        friend class DIFrame::Container;
+  
+        template <typename OtherRs, typename OtherPs, typename OtherDeps>
+        friend struct DIFrame::utils::ContainerImpl;
+  
+        template <typename M, typename ToRegister>
+        friend struct DIFrame::utils::ModuleConversionHelper;
+  
+        template <typename M, typename TargetRequirements, bool is_already_provided, typename C>
+        friend struct DIFrame::utils::EnsureProvidedTypeHelper;
+    
+        template <typename M>
+        friend struct DIFrame::utils::Identity;
+  
+        template <typename M, typename I, typename C>
+        friend struct DIFrame::utils::Bind;
+  
+        template <typename M, typename C>
+        friend struct DIFrame::utils::RegisterInstance;
+  
+        template <typename M, typename Signature>
+        friend struct DIFrame::utils::RegisterProvider;
+  
+        template <typename M, typename AnnotatedSignature>
+        friend struct DIFrame::utils::RegisterFactory;
+  
+        template <typename M, typename Signature>
+        friend struct RegisterConstructor;
+  
+        template <typename M, typename AnnotatedSignature>
+        friend struct DIFrame::utils::RegisterConstructorAsFactory;
+  
+        template <typename M, typename OtherM>
+        friend struct DIFrame::utils::InstallModule;
+
     public:
         using Dep  = Dependency;
         using Cons = Constructor;
@@ -28,7 +68,27 @@ namespace DIFrame {
         using This = ContainerImpl<Dep, Cons, Sig>;
 
     public:
+        template <typename Interface, typename Implement>
+        resultOf<Set<This, Interface, Implement>, This&&>
+        set() && {
+            return Set<This, Interface, Implement>()(std::move(*this));
+        }
 
+        template <typename >
+        setExtraConstructor
+
+        template <typename >
+        setInstance
+
+        //??
+        template <typename >
+        registerProvider
+
+        template <typename >
+        setFactory
+
+        template <typename >
+        appendContainer
     
     }
 
