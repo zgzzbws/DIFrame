@@ -49,11 +49,9 @@ namespace utils{
                                                         RemoveDependencyFromSignature( NewDependency, typename Container::Sig ), 
                                                         typename Container::Set>;
 
-    //AddProvide
+    //1   AddRequirement
 
-    //EnsureProvidedTypes
-
-    //EnsureProvidedType
+    //2   AddProvide
 
     
 
