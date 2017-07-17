@@ -17,4 +17,4 @@ namespace DIFrame {
 
 }
 
-#endif //DIFRAME_FORWARD_DECLARATION_H
+#endif // DIFRAME_FORWARD_DECLARATION_H
