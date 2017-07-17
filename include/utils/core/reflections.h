@@ -123,7 +123,9 @@ namespace utils {
         Reflections& operator=( const Reflections& other );
         Reflections& operator=( Reflections&& other );
   
-        ~Reflections();
+        ~Reflections() {
+            clear();
+        }
         
         //Bind the Instance with its interface
         //I and T shouldn't be pointers;
