@@ -6,47 +6,55 @@
 namespace DIFrame {
 namespace utils{
 
-    template <typename Container, typename NewDependency, bool also_in_container>
+    //AddRequirement
+    template <typename Contain, typename NewDependency, bool also_in_container>
     struct AppendDependencyHelper {};
 
-    template <typename Container, typename NewDependency>
-    struct AppendDependencyHelper <Container, NewDependency, true> {
-        using type = Container;
+    template <typename Contain, typename NewDependency>
+    struct AppendDependencyHelper <Contain, NewDependency, true> {
+        using type = Contain;
     };
 
-    template <typename Container, typename NewDependency>
-    struct AppendDependencyHelper <Container, NewDependency, false> {
-        using type = PartialContainer <append_params<NewDependency, typename Container::Dep>, typename Container::Cons, 
-                                    typename Container::Sig, typename Container::Set>;
+    template <typename Contain, typename NewDependency>
+    struct AppendDependencyHelper <Contain, NewDependency, false> {
+        using type = ContainerImpl <append_params<NewDependency, typename Contain::Dep>, typename Contain::Cons, 
+                                    typename Contain::Sig>;
     };
 
-    template <typename Container, typename NewDependency>
-    using AppendDependency = typename AppendDependencyHelper <Container, 
+    template <typename Contain, typename NewDependency>
+    using AppendDependency = typename AppendDependencyHelper <Contain, 
                                                               NewDependency,
-                                                              is_in_params<NewDependency, typename Container::Cons>::value ||
-                                                              is_in_params<NewDependency, typename Container::Dep>::value> :: type;
+                                                              is_in_params<NewDependency, typename Contain::Cons>::value ||
+                                                              is_in_params<NewDependency, typename Contain::Dep>::value> :: type;
 
-    template <typename Container, typename SeveralDependency>
+    template <typename Contain, typename SeveralDependency>
     struct AppendSeveralDependencyHelper {};
 
-    template <typename Container, typename SeveralDependency>
+    template <typename Contain, typename SeveralDependency>
     struct AppendSeveralDependencyHelper {
-        using type = Container;
+        using type = Contain;
     }
 
-    template <typename Container, typename Dependency, typename... OtherDependency>
-    struct AppendSeveralDependencyHelper <Container, params<Dependency, OtherDependency...>> {
-        using tempContainer = AppendSeveralDependencyHelper <Container, params<OtherDependency>>::type;
-        using type = AppendDependency<tempContainer, Dependency>;
+    template <typename Contain, typename CurrentDependency, typename... OtherDependency>
+    struct AppendSeveralDependencyHelper <Contain, params<CurrentDependency, OtherDependency...>> {
+        using tempContainer = AppendSeveralDependencyHelper <Contain, params<OtherDependency>>::type;
+        using type = AppendDependency<tempContainer, CurrentDependency>;
     }
 
-    template <typename Container, typename SeveralDependency>
-    using AppendSeveralDependency = typename AppendSeveralDependencyHelper<Container, SeveralDependency>::type;
+    template <typename Contain, typename SeveralDependency>
+    using AppendSeveralDependency = typename AppendSeveralDependencyHelper<Contain, SeveralDependency>::type;
 
+    //RemoveRequirement
+    template <typename Contain, typename DeletedDependency>
+    using RemoveDependency = typename
 
-    //1   AddRequirement
+    //AddProvide
+    template <>
+    struct AppendSignatureHelper
 
-    //2   AddProvide
+    template <typename>
+    using AppendSignature = typename AppendSignatureHelper<>::type;
+
 
     
 
