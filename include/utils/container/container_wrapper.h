@@ -36,9 +36,9 @@ namespace utils{
 
     template <typename Contain, typename Implement>
     struct SetWithInstance {
-        using M1
-        M1 operator()(Contain&& contain, Implement* ) {
-            contain.reflections.setInstance()
+        using AppendSignatureContainer = AppendSignatureContainer<Contain, Implement, params<>>;
+        AppendSignatureContainer operator()(Contain&& contain, Implement* instance) {
+            contain.reflections.setInstance(instance);
             return std::move(contain.reflections);
         }
     };
@@ -61,10 +61,23 @@ namespace utils{
         }
     };
 
+    /*
     template <typename Contain, typename AssistedSignature>
     struct SetWithAssisted {
+        using 
+
+
+
+
+        using AppendDependencyContainer = AppendDependency<Contain, SignatureDependency>;
+        using AppendSignatureContainer = AppendSignature<AppendDependencyContainer, getType<Implement>, SignatureDependency>
+        AppendSignatureContainer operator()(Contain&& contain, Signature* dependency) {
+            contain.reflections.setWithDependency(dependency);
+            return std::move(contain.reflections);
+        }
         
     };
+    */
 
     template <typename Contain, typename OthreContain>
     struct AppendContainer {
@@ -76,9 +89,9 @@ namespace utils{
         using NewCons
         using NewSig
 
-        using M1
+        using NewContainer = ContainerImpl<NewDep, NewCons, NewSig>;
 
-        M1 operator()(Contain&& contain, const OtherContain& otherContain) {
+        NewContainer operator()(Contain&& contain, const OtherContain& otherContain) {
             contain.reflections.append(otherContain.reflections);
             return std::move(contain.reflections);
         }
