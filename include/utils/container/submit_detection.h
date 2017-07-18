@@ -11,13 +11,13 @@ namespace utils{
     FetchSignature {
         static_assert( false && sizeof(Type) , 
                        "Error Message : The input is not a valid signature" );
-    }
+    };
 
     template <typename Type, typename... Args>
     FetchSignature <Type(Args...)> {
         using T = Type;
         using A = Parm<Args...>;
-    }
+    };
 
     template <typename Signature>
     using SignatureType = typename FetchSignature<Signature>::T;
@@ -51,11 +51,9 @@ namespace utils{
    
         using Signature = typename std::enable_if<judge, Submit>::type;
         using Args = typename std::enable_if<judge, Para>::type;
-    }
+    };
 
-
-
-}
-}
+} // namespace utils
+} // namespace DIFrame
 
 #endif // DIFRAME_SUBMIT_DETECTION_H

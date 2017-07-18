@@ -1,8 +1,6 @@
 #ifndef DIFRAME_CONTAINER_PROCESS_H
 #define DIFRAME_CONTAINER_PROCESS_H
 
-//PartialContainer
-
 namespace DIFrame {
 namespace utils{
 
