@@ -64,7 +64,7 @@ namespace utils{
         return thisInstance;
     }
 
-    void Reflections::install( const Reflection& other ) {
+    void Reflections::append( const Reflection& other ) {
         //check whether the DynamicBuildList of other is empty
         //if it is not empty
         for( const auto& findResult : other.DynamicBuildMap ) {

@@ -131,7 +131,7 @@ namespace utils {
         //I and T shouldn't be pointers;
         template <typename I, typename T>
         void set() {
-            //TODO: add the assert to gurantee I and T are pointers
+            //TODO: guarantee I and T are pointers
             auto createFun = []( Reflections& reflections, void* ) {
                 T* thisPtr = reflections.getInstanceHelper<T>();
                 I* ITypePtr = static_cast<I*>(thisPtr);
@@ -141,22 +141,25 @@ namespace utils {
         }
 
         template <typename T>
-        void setInstance( T& instance ) {
+        void setWithInstance( T& instance ) {
             createDynamicBuild<T>( &instance, nopDeleter );
         }
 
+        //registerProvider
         template <typename T, typename... Param>
-        void registerProvider( T* (*provider)(Param...), void (*deleter)(void*) );
+        void setWithDependency( T* (*provider)(Param...), void (*deleter)(void*) );
   
         template <typename T, typename... Param>
-        void registerProvider( T (*provider)(Param...), void (*deleter)(void*) );
+        void setWithDependency( T (*provider)(Param...), void (*deleter)(void*) );
   
+        /*
         template <typename AnnotatedSignature>
         void registerFactory( RequiredSignatureForAssistedFactory<AnnotatedSignature>* factory );
+        */
 
         // Note: `other' must be a pure component (no singletons created yet)
         // while this doesn't have to be.
-        void install( const Reflections& other );
+        void append( const Reflections& other );
 
         //fetch the instance from the DynamicBuild
         template <typename T>

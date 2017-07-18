@@ -38,7 +38,7 @@ namespace utils{
     struct SetWithInstance {
         using AppendSignatureContainer = AppendSignatureContainer<Contain, Implement, params<>>;
         AppendSignatureContainer operator()(Contain&& contain, Implement* instance) {
-            contain.reflections.setInstance(instance);
+            contain.reflections.setWithInstance(instance);
             return std::move(contain.reflections);
         }
     };
