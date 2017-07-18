@@ -11,19 +11,6 @@ namespace utils{
         };
     };
 
-template <typename M, typename I, typename C>
-struct Bind {
-  using M1 = AddRequirement<M, C>;
-  using M2 = AddProvide<M1, I, List<C>>;
-  M2 operator()(M&& m) {
-    FruitDelegateCheck(CheckClassType<I, GetClassForType<I>>);
-    FruitDelegateCheck(CheckClassType<C, GetClassForType<C>>);
-    FruitDelegateCheck(CheckBaseClass<I, C>);
-    m.unsafeModule.template bind<I, C>();
-    return M2(std::move(m.unsafeModule));
-  };
-};
-
     template <typename Contain, typename Interface, typename Implement >
     struct Set {
         using 
@@ -33,6 +20,31 @@ struct Bind {
             return M2(std::move(contain.reflections));
         };
     };
+
+    template <typename Contain, typename Signature>
+    struct SetWithConstructor {
+
+    }
+
+    template <typename Contain, typename Implement>
+    struct SetWithInstance {
+
+    }
+
+    template <typename Contain, typename >
+    struct SetWithDependency {
+
+    }
+
+    template <typename AssistedSignature>
+    struct SetWithAssisted {
+
+    }
+
+    template <>
+    struct AppendContainer {
+        
+    }
 
 }
 }

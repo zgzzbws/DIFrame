@@ -43,11 +43,6 @@ namespace utils{
     template <typename Container, typename SeveralDependency>
     using AppendSeveralDependency = typename AppendSeveralDependencyHelper<Container, SeveralDependency>::type;
 
-    template <typename Container, typename Dependency>
-    using RemoveDependency = typename PartialContainer <remove_from_params<NewDependency, typename Container::Dep>, 
-                                                        typename Container::Cons, 
-                                                        RemoveDependencyFromSignature( NewDependency, typename Container::Sig ), 
-                                                        typename Container::Set>;
 
     //1   AddRequirement
 
