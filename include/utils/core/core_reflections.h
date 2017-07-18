@@ -147,10 +147,14 @@ namespace utils {
 
         //registerProvider
         template <typename T, typename... Param>
-        void setWithDependency( T* (*provider)(Param...), void (*deleter)(void*) );
+        void setWithDependency( T* (*provider)(Param...), void (*deleter)(void*) ) {
+            
+        }
   
         template <typename T, typename... Param>
-        void setWithDependency( T (*provider)(Param...), void (*deleter)(void*) );
+        void setWithDependency( T (*provider)(Param...), void (*deleter)(void*) ) {
+
+        }
   
         /*
         template <typename AnnotatedSignature>

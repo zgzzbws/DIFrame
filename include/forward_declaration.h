@@ -6,8 +6,10 @@ namespace DIFrame {
     template<typename... Types>
     class Container;
 
+    /*
     template<typename Type>
     struct Assist;
+    */
 
     template<typename... Types>
     struct Dependency;
