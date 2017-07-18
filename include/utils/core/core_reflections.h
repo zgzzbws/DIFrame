@@ -1,5 +1,5 @@
-#ifndef DIFRAME_REFLECTIONS_H
-#define DIFRAME_REFLECTIONS_H
+#ifndef DIFRAME_CORE_REFLECTIONS_H
+#define DIFRAME_CORE_REFLECTIONS_H
 
 /**
 *     使用一个工厂类动态创建实例对象
@@ -169,4 +169,4 @@ namespace utils {
 } // namespace utils
 } // namespace DIFrame
 
-#endif // DIFRAME_REFLECTIONS_H
+#endif // DIFRAME_CORE_REFLECTIONS_H
