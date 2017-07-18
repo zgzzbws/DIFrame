@@ -1,5 +1,5 @@
-#ifndef DIFRAME_GET_INSTANCE_H
-#define DIFRAME_GET_INSTANCE_H
+#ifndef DIFRAME_CORE_GET_INSTANCE_H
+#define DIFRAME_CORE_GET_INSTANCE_H
 
 namespace DIFrame{
 namespace utils{
@@ -56,4 +56,4 @@ namespace utils{
 } // namespace utils
 } // namespace DIFrame
 
-#endif // DIFRAME_GET_INSTANCE_H
+#endif // DIFRAME_CORE_GET_INSTANCE_H
