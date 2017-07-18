@@ -49,13 +49,18 @@ namespace utils{
     using RemoveDependency = typename
 
     //AddProvide
-    template <>
-    struct AppendSignatureHelper
+    template <typename Contain, typename NewConstructor, typename Paras>
+    struct AppendSignatureHelper {
+        using NewSignature = 
+        //check
+        using tempContainer = ContainerImpl<typename Contain::Dependency, >
+        using type = RemoveDependency<tempContainer, NewConstructor>;
+    }
 
-    template <typename>
-    using AppendSignature = typename AppendSignatureHelper<>::type;
+    template <typename Contain, typename NewConstructor, typename Paras>
+    using AppendSignature = typename AppendSignatureHelper<Contain, NewConstructor, Paras>::type;
 
-
+    //ExpandInjectorsInParams
     
 
 

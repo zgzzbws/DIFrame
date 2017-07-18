@@ -14,10 +14,13 @@ namespace utils{
     template <typename Contain, typename Interface, typename Implement >
     struct Set {
         using AppendDependencyContainer = AppendDependency<Contain, Implement>;
-        using 
-        M2 operator()(Contain&& contain) {
+        using AppendSignatureContainer = AppendSignature<AppendDependencyContainer, Interface, params<Implement>>
+        AppendSignatureContainer operator()(Contain&& contain) {
+            //check 
+            //check
+            //check
             contain.reflections.template set<Interface, Implement>();
-            return M2(std::move(contain.reflections));
+            return AppendSignatureContainer(std::move(contain.reflections));
         };
     };
 
@@ -49,10 +52,10 @@ namespace utils{
     template <typename Contain, typename Implement, typename... Paras>
     struct SetWithDependency <Contain, Implement(Paras...)> {
         using Signature = Implement(Paras...);
-        using 
-        using M1
-        using M2
-        M2 operator()(Contain&& contain, Signature* dependency) {
+        using SignatureDependency = //ExpandInjectorsInParams
+        using AppendDependencyContainer = AppendDependency<Contain, SignatureDependency>;
+        using AppendSignatureContainer = AppendSignature<AppendDependencyContainer, getType<Implement>, SignatureDependency>
+        AppendSignatureContainer operator()(Contain&& contain, Signature* dependency) {
             contain.reflections.setWithDependency(dependency);
             return std::move(contain.reflections);
         }
