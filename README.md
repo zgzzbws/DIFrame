@@ -25,3 +25,27 @@ DIFrame是一个使用C++编写的依赖注入（DI）容器，亦可称为控�
     *  关于线程安全性我还没有想好，希望可以找到一种不加锁的解决方案。
 * 冲突
     *  如果多个类对应一个接口，可能需要额外的处理方式。
+
+##示例
+* 注册
+```C++
+//接口类
+class Writer {
+public:
+  virtual void write(std::string s) = 0;
+};
+
+//实现类
+class StdoutWriter : public Writer {
+public:
+  // Like "StdoutWriter() = default;" but also marks this constructor as the
+  // one to use for injection.
+  INJECT(StdoutWriter()) = default;
+  
+  virtual ~StdoutWriter() = default;
+  
+  virtual void write(std::string s) override {
+    std::cout << s;
+  }
+};
+```
