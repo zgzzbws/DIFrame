@@ -74,18 +74,17 @@ namespace DIFrame {
             return Set<This, Interface, Implement>()(std::move(*this));
         }
 
-        template <typename >
-        setExtraConstructor
+        template <typename Contain, typename Signature>
+        struct SetWithConstructor
 
-        template <typename >
-        setInstance
+        template <typename Contain, typename Implement>
+        struct SetWithInstance 
 
-        //??
-        template <typename >
-        registerProvider
+        template <typename Contain, typename Signature>
+        struct SetWithDependency {
 
-        template <typename >
-        appendContainer
+        template <typename Contain, typename OthreContain>
+        struct AppendContainer {
     
     }
 
