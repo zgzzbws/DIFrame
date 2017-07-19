@@ -167,4 +167,6 @@ namespace utils {
 } // namespace utils
 } // namespace DIFrame
 
+#include "core_reflections_impl.h"
+
 #endif // DIFRAME_CORE_REFLECTIONS_H

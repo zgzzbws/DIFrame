@@ -5,7 +5,7 @@ namespace DIFrame {
 namespace utils {
 
     template <typename Interface, typename Implement>
-    void set() {
+    inline void set() {
         //TODO: guarantee I and T are pointers
         static_assert(!std::is_pointer<Interface>::value, "The Interface cannot be a pointer");
         static_assert(!std::is_pointer<Implement>::value, "The Implement cannot be a pointer");
@@ -17,7 +17,7 @@ namespace utils {
         createDynamicBuild<Interface>( nullptr, create, nopDeleter );
     }
 
-    
+
 
 } // namespace utils
 } // namespace DIFrame
