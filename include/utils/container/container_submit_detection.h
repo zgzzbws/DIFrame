@@ -1,5 +1,5 @@
-#ifndef DIFRAME_SUBMIT_DETECTION_H
-#define DIFRAME_SUBMIT_DETECTION_H
+#ifndef DIFRAME_CONTAINER_SUBMIT_DETECTION_H
+#define DIFRAME_CONTAINER_SUBMIT_DETECTION_H
 
 #include <type_traits>
 
@@ -56,4 +56,4 @@ namespace utils{
 } // namespace utils
 } // namespace DIFrame
 
-#endif // DIFRAME_SUBMIT_DETECTION_H
+#endif // DIFRAME_CONTAINER_SUBMIT_DETECTION_H

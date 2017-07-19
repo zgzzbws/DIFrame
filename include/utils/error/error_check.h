@@ -1,5 +1,5 @@
-#ifndef DIFRAME_CHECK_H
-#define DIFRAME_CHECK_H
+#ifndef DIFRAME_ERROR_CHECK_H
+#define DIFRAME_ERROR_CHECK_H
 
 namespace DIFrame {
 namespace utils {
@@ -8,4 +8,4 @@ namespace utils {
 }
 }
 
-#endif // DIFRAME_CHECK_H
+#endif // DIFRAME_ERROR_CHECK_H

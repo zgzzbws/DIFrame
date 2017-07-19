@@ -1,5 +1,5 @@
-#ifndef DIFRAME_TYPE_INFO
-#define DIFRAME_TYPE_INFO
+#ifndef DIFRAME_DETAIL_TYPE_INFO
+#define DIFRAME_DETAIL_TYPE_INFO
 
 #include <typeinfo>
 
@@ -57,4 +57,4 @@ namespace std {
 
 } // namespace std
 
-#endif // DIFRAME_TYPE_INFO
+#endif // DIFRAME_DETAIL_TYPE_INFO

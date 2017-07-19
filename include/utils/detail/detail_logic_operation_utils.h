@@ -1,5 +1,5 @@
-#ifndef DIFRAME_LOGIC_OPERATION_H
-#define DIFRAME_LOGIC_OPERATION_H
+#ifndef DIFRAME_DETAIL_LOGIC_OPERATION_H
+#define DIFRAME_DETAIL_LOGIC_OPERATION_H
 
 namespace DIFrame {
 namespace utils {
@@ -37,4 +37,4 @@ namespace utils {
 } // namespace utils
 } // namespace DIFrame
 
-#endif // DIFRAME_LOGIC_OPERATION_H
+#endif // DIFRAME_DETAIL_LOGIC_OPERATION_H

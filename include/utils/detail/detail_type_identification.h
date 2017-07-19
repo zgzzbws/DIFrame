@@ -1,5 +1,5 @@
-#ifndef DIFRAME_TYPE_IDENTIFICATION_H
-#define DIFRAME_TYPE_IDENTIFICATION_H
+#ifndef DIFRAME_DETAIL_TYPE_IDENTIFICATION_H
+#define DIFRAME_DETAIL_TYPE_IDENTIFICATION_H
 
 #include <memory>
 
@@ -56,4 +56,4 @@ namespace utils{
 } // namespace utils
 } //namespace DIFrame
 
-#endif // DIFRAME_TYPE_IDENTIFICATION_H
+#endif // DIFRAME_DETAIL_TYPE_IDENTIFICATION_H

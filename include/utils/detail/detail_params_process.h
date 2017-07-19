@@ -1,5 +1,5 @@
-#ifndef DIFRAME_PARAMS_PROCESS_H
-#define DIFRAME_PARAMS_PROCESS_H
+#ifndef DIFRAME_DETAIL_PARAMS_PROCESS_H
+#define DIFRAME_DETAIL_PARAMS_PROCESS_H
 
 namespace DIFrame{
 namespace utils{
@@ -35,4 +35,4 @@ namespace utils{
 }
 }
 
-#endif // DIFRAME_PARAMS_PROCESS_H
+#endif // DIFRAME_DETAIL_PARAMS_PROCESS_H
