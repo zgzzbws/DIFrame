@@ -2,7 +2,7 @@
 
 ## 简介
 
-DIFrame是一个使用C++编写的依赖注入（DI）容器，亦可称为控制反转（IoC）容器，该框架可以用来控制下层单元的实例化过程，以达到降低上层类和下层单元之间的耦合的目的。
+DIFrame是一个使用C++编写的依赖注入`(Dependence Injection, DI)`容器，亦可称为控制反转`(Inversion of Control, IoC)`容器，该框架可以用来控制下层单元的实例化过程，以达到降低上层类和下层单元之间的耦合的目的。
 
 ##原理
 
@@ -65,9 +65,10 @@ private:
 
 };
 
-DIFrame::Container<DIFrame::Dependency<Color>, Pen> ObtainContainer {
+DIFrame::Container<DIFrame::Dependency<Color>, WritingTools> ObtainContainer {
+    //选择链式编程的方式
     return DIFrame::createContainer()
-                    .registerConstructor<Pen(Color*)>()
-                    .bind<WritingTools, Pen>();
+                    .SetWithConstructor<Pen(Color*)>()
+                    .srt<WritingTools, Pen>();
 }
 ```
