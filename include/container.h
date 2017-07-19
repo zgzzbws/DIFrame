@@ -74,19 +74,30 @@ namespace DIFrame {
             return Set<This, Interface, Implement>()(std::move(*this));
         }
 
-        template <typename Contain, typename Signature>
-        struct SetWithConstructor
+        template <typename Signature>
+        resultOf<SetWithConstructor<This, Signature>, This&&>
+        setWithConstructor() && {
+            return SetWithConstructor<This, Signature>()(std::move(*this));
+        }
 
-        template <typename Contain, typename Implement>
-        struct SetWithInstance 
+        template <typename Implement>
+        resultOf<SetWithInstance<This, Implement>, M&&, Implement*>
+        setWithInstance(Implement* instance) && {
+            return SetWithInstance<This, Implement>()(std::move(*this), instance);
+        }
 
-        template <typename Contain, typename Signature>
-        struct SetWithDependency {
+        template <typename Signature>
+        resultOf<SetWithDependency<This, Signature>, This&&, Signature*>
+        SetWithDependency(Signature* provider) && {
+            return SetWithDependency<This, Signature>()(std::move(*this), provider);
+        }
 
-        template <typename Contain, typename OthreContain>
-        struct AppendContainer {
-    
-    }
+        template <typename OtherRs, typename OtherPs, typename OtherDeps>
+        resultOf<AppendContainer<M, ModuleImpl<OtherRs, OtherPs, OtherDeps>>, M&&, const ModuleImpl<OtherRs, OtherPs, OtherDeps>&>
+        appendContainer(const ModuleImpl<OtherRs, OtherPs, OtherDeps>& module) && {
+            return AppendContainer<M, ModuleImpl<OtherRs, OtherPs, OtherDeps>>()(std::move(*this), module);
+        }
+    };
 
     template <typename... Types>
     class Container;
@@ -116,7 +127,7 @@ namespace DIFrame {
 
     inline Container<> createContainer() {
         return {};
-    }
+    };
 
 } // namespace DIFrame
 

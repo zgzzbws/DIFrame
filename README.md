@@ -67,6 +67,7 @@ private:
 
 DIFrame::Container<DIFrame::Dependency<Color>, WritingTools> ObtainContainer {
     //选择链式编程的方式
+    //在这里使用SetWithConstructor进行注册
     return DIFrame::createContainer()
                     .SetWithConstructor<Pen(Color*)>()
                     .srt<WritingTools, Pen>();
