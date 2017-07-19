@@ -29,23 +29,45 @@ DIFrame是一个使用C++编写的依赖注入（DI）容器，亦可称为控�
 ##示例
 * 注册
 ```C++
-//接口类
-class Writer {
+//实现类
+class Pen : public WritingTools {
 public:
-  virtual void write(std::string s) = 0;
+    Pen(Color* color)
+        : color(color) {
+    }
+    
+    //使用Submit标识要注册的类
+    using Submit = Pen(Color*);
+
+    // 实现方法
+    //...
+
+private:
+    Color* color;
+
+};
+```
+
+* 构造
+```C++
+//实现类
+//假设无法直接在类中标识
+class Pen : public WritingTools {
+public:
+    PenImpl(Color* color)
+        : color(color) {
+    }
+
+    // ...
+
+private:
+    Color* color;
+
 };
 
-//实现类
-class StdoutWriter : public Writer {
-public:
-  // Like "StdoutWriter() = default;" but also marks this constructor as the
-  // one to use for injection.
-  INJECT(StdoutWriter()) = default;
-  
-  virtual ~StdoutWriter() = default;
-  
-  virtual void write(std::string s) override {
-    std::cout << s;
-  }
-};
+DIFrame::Container<DIFrame::Dependency<Color>, Pen> ObtainContainer {
+    return DIFrame::createContainer()
+                    .registerConstructor<Pen(Color*)>()
+                    .bind<WritingTools, Pen>();
+}
 ```
