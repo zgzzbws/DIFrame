@@ -8,7 +8,7 @@ namespace utils {
     void set() {
         //TODO: guarantee I and T are pointers
         static_assert(!std::is_pointer<Interface>::value, "The Interface cannot be a pointer");
-        static_assert(!std::is_pointer<Implement>::value, "The IntImplement cannot be a pointer");
+        static_assert(!std::is_pointer<Implement>::value, "The Implement cannot be a pointer");
         auto create = []( Reflections& reflections, void* ) {
             Implement* ImplementPtr = reflections.getInstanceHelper<Implement>();
             Interface* InterfacePtr = static_cast<Interface*>(ImplementPtr);
@@ -16,6 +16,8 @@ namespace utils {
         };
         createDynamicBuild<Interface>( nullptr, create, nopDeleter );
     }
+
+    
 
 } // namespace utils
 } // namespace DIFrame

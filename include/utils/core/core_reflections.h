@@ -126,19 +126,18 @@ namespace utils {
         ~Reflections() {
             clear();
         }
-        
-        //Bind the Instance with its interface
-        //I and T shouldn't be pointers;
-        template <typename I, typename T>
-        void set() {
-            //TODO: guarantee I and T are pointers
-            auto createFun = []( Reflections& reflections, void* ) {
-                T* thisPtr = reflections.getInstanceHelper<T>();
-                I* ITypePtr = static_cast<I*>(thisPtr);
-                return reinterpret_cast<void*>(ITypePtr);
-            };
-            createDynamicBuild<I>( nullptr, createFun, nopDeleter );
+
+        //fetch the instance from the DynamicBuild
+        template <typename T>
+        auto fetch() -> decltype(GetInstance<T>()(*this)) {
+            return GetInstance<T>()(*this);
         }
+        
+    public:
+        //Bind the Implement with its interface
+        //I and T shouldn't be pointers;
+        template <typename Interface, typename Implement>
+        void set();
 
         template <typename T>
         void setWithInstance( T& instance ) {
@@ -161,11 +160,7 @@ namespace utils {
         // while this doesn't have to be.
         void append( const Reflections& other );
 
-        //fetch the instance from the DynamicBuild
-        template <typename T>
-        auto fetch() -> decltype(GetInstance<T>()(*this)) {
-            return GetInstance<T>()(*this);
-        }
+        
 
     }；
 
