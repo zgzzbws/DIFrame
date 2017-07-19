@@ -6,7 +6,7 @@ namespace utils {
 
     template <typename Interface, typename Implement>
     inline void set() {
-        //TODO: guarantee I and T are pointers
+        //TODO: guarantee Interface and Implement are pointers
         static_assert(!std::is_pointer<Interface>::value, "The Interface cannot be a pointer");
         static_assert(!std::is_pointer<Implement>::value, "The Implement cannot be a pointer");
         auto create = []( Reflections& reflections, void* ) {
