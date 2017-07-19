@@ -50,8 +50,6 @@ namespace utils {
         createDynamicBuild<Implement>(reinterpret_cast<void*>(funptr), create, deleteptr);
     }
 
-
-
 } // namespace utils
 } // namespace DIFrame
 

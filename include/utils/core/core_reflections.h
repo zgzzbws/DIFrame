@@ -157,9 +157,6 @@ namespace utils {
         // Note: `other' must be a pure component (no singletons created yet)
         // while this doesn't have to be.
         void append( const Reflections& other );
-
-        
-
     }；
 
 } // namespace utils

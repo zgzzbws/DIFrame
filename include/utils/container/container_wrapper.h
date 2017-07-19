@@ -11,6 +11,7 @@ namespace utils{
         };
     };
 
+    //set
     template <typename Contain, typename Interface, typename Implement >
     struct Set {
         using AppendDependencyContainer = AppendDependency<Contain, Implement>;
@@ -34,6 +35,7 @@ namespace utils{
         }
     };
 
+    //setWithInstance
     template <typename Contain, typename Implement>
     struct SetWithInstance {
         using AppendSignatureContainer = AppendSignatureContainer<Contain, Implement, params<>>;
@@ -43,6 +45,7 @@ namespace utils{
         }
     };
 
+    //setWithDependency
     template <typename Contain, typename Signature>
     struct SetWithDependency {
         // General Case
@@ -64,17 +67,11 @@ namespace utils{
     /*
     template <typename Contain, typename AssistedSignature>
     struct SetWithAssisted {
-        using 
-        using AppendDependencyContainer = AppendDependency<Contain, SignatureDependency>;
-        using AppendSignatureContainer = AppendSignature<AppendDependencyContainer, getType<Implement>, SignatureDependency>
-        AppendSignatureContainer operator()(Contain&& contain, Signature* dependency) {
-            contain.reflections.setWithDependency(dependency);
-            return std::move(contain.reflections);
-        }
-        
+
     };
     */
 
+    //append
     template <typename Contain, typename OthreContain>
     struct AppendContainer {
         using OtherDep = typename OtherContain::Dep;
