@@ -32,8 +32,8 @@ DIFrame是一个使用C++编写的依赖注入`(Dependence Injection, DI)`容器
 //实现类
 class Pen : public WritingTools {
 public:
-    Pen(Color* color)
-        : color(color) {
+    Pen(Color* color) : color(color) {
+
     }
     
     //使用Submit标识要注册的类
@@ -54,10 +54,11 @@ private:
 //假设无法直接在类中标识
 class Pen : public WritingTools {
 public:
-    PenImpl(Color* color)
-        : color(color) {
+    Pen(Color* color) : color(color) {
+        
     }
 
+    // 实现方法
     // ...
 
 private:
