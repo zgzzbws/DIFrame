@@ -139,17 +139,15 @@ namespace utils {
         template <typename Interface, typename Implement>
         void set();
 
-        template <typename T>
-        void setWithInstance( T& instance ) {
-            createDynamicBuild<T>( &instance, nopDeleter );
-        }
+        template <typename Implement>
+        void setWithInstance( Implement* instance );
 
         //registerProvider
-        template <typename T, typename... Param>
-        void setWithDependency( T* (*provider)(Param...), void (*deleter)(void*) );
+        template <typename Implement, typename... Dependencies>
+        void setWithDependency( Implement* (*funptr)(Dependencies...), void (*deleteptr)(void*) );
   
-        template <typename T, typename... Param>
-        void setWithDependency( T (*provider)(Param...), void (*deleter)(void*) );
+        template <typename Implement, typename... Dependencies>
+        void setWithDependency( Implement (*funptr)(Dependencies...), void (*deleteptr)(void*) );
   
         /*
         template <typename AnnotatedSignature>

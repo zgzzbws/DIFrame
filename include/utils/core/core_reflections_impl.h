@@ -17,6 +17,22 @@ namespace utils {
         createDynamicBuild<Interface>( nullptr, create, nopDeleter );
     }
 
+    template <typename Implement>
+    inline void setWithInstance( Implement* instance ) {
+        //check( instance != nullptr );
+        createDynamicBuild<Implement>( instance, nopDeleter );
+    }
+
+    template <typename Implement, typename... Dependencies>
+    inline void setWithDependency( Implement* (*funptr)(Dependencies...), void (*deleteptr)(void*) ) {
+
+    }
+
+    template <typename Implement, typename... Dependencies>
+    inline void setWithDependency( Implement (*funptr)(Dependencies...), void (*deleteptr)(void*) ) {
+        
+    }
+
 
 
 } // namespace utils
