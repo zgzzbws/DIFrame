@@ -7,8 +7,7 @@ namespace DIFrame {
 
 namespace util {
 
-    //is obtain the instance?
-    class Instance;
+    class Reflectiosn;
 
     template <typename T>
     struct GetHelper;

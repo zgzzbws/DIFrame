@@ -85,9 +85,6 @@ namespace DIFrame {
         registerProvider
 
         template <typename >
-        setFactory
-
-        template <typename >
         appendContainer
     
     }

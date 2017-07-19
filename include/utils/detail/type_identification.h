@@ -44,6 +44,12 @@ namespace utils{
     template <typename T>
     using getType = typename getTypeHelper<T>::type;
 
+    template <typename T>
+    struct NopDeleter {
+        void operator()(T*){
+        }
+    };
+
     template <typename F, typename... Args>
     using resultOf = typename std::remove_reference<decltype(F()(std::declval<Args>()...))>::type;
                      
