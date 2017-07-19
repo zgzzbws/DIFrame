@@ -59,8 +59,41 @@ namespace utils{
     using AppendSignature = typename AppendSignatureHelper<Contain, NewConstructor, Paras>::type;
 
     //ExpandInjectorsInParams
+    template <typename ParasList>
+    struct ExpandTypeOfParamsHelper {};
+
+    template <>
+    struct ExpandTypeOfParamsHelper <params<>> {
+        using type = params<>;
+    };
+
+    template <typename Type, typename... OtherTypes>
+    struct ExpandTypeOfParamsHelper<params<Type, OtherTypes...>> {
+        using tempResult = ExpandTypeOfParamsHelper<params<OtherTypes...>>::type;
+        using type = append_params<Type, tempResult>;
+    };
+
+    template <typename... Types, typename... OtherTypes>
+    struct ExpandTypeOfParamsHelper<params<DIFrame::Get<Types...>, OtherTypes...>> {
+        using tempResult = typename ExpandInjectorsInParamsHelper<params<OtherTypes...>>::type;
+        using type = concat_params<params<Types...>, tempResult>;
+    }
+
+    template <typename ParasList>
+    using ExpandTypeOfParams = typename ExpandTypeOfParamsHelper<ParasList>::type;
 
     //ConstructorProvider
+    template <typename Signature>
+    struct CreateConstructor {};
+
+    template <typename Constructor, typename... Paras>
+    struct CreateConstructor<Constructor(Paras...)> {
+        static Constructor* fun(Paras... paras) {
+            static_assert(!std::is_pointer<Constructor>::value, "DIFrame Error : Constructor cannot be a pointer");
+            static_assert(std::is_constructible<Constructor, Paras...>::value, "Error, Constructor cannot be constructible with Paras");
+            return new Constructor(std::forward<Paras>(paras)...);
+        }
+    };
 
     //RegisterProvider
     

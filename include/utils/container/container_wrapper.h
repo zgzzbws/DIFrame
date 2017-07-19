@@ -27,18 +27,18 @@ namespace utils{
 
     template <typename Contain, typename Signature>
     struct SetWithConstructor {
-        using Dependency = decltype()
-        using
-        using M1
-        M1 operator()(Contain&& contain) {
-            return 
+        using thisInstanceType = decltype(CreateConstructor<Signature>::fun);
+        using SetWithDependencyResult = SetWithDependency<Contain, thisInstanceType>;
+        using ResultOfSetWithDependency = resultOf<SetWithDependencyResult, Contain&&, thisInstanceType*>;
+        ResultOfSetWithDependency operator()(Contain&& contain) {
+            return SetWithDependencyResult()(std::move(contain), CreateConstructor<Signature>::fun);
         }
     };
 
     //setWithInstance
     template <typename Contain, typename Implement>
     struct SetWithInstance {
-        using AppendSignatureContainer = AppendSignatureContainer<Contain, Implement, params<>>;
+        using AppendSignatureContainer = AppendSignature<Contain, Implement, params<>>;
         AppendSignatureContainer operator()(Contain&& contain, Implement* instance) {
             contain.reflections.setWithInstance(instance);
             return std::move(contain.reflections);
@@ -55,7 +55,7 @@ namespace utils{
     template <typename Contain, typename Implement, typename... Paras>
     struct SetWithDependency <Contain, Implement(Paras...)> {
         using Signature = Implement(Paras...);
-        using SignatureDependency = //ExpandInjectorsInParams
+        using SignatureDependency = ExpandTypeOfParams<params<getType<Paras>...>>;
         using AppendDependencyContainer = AppendDependency<Contain, SignatureDependency>;
         using AppendSignatureContainer = AppendSignature<AppendDependencyContainer, getType<Implement>, SignatureDependency>
         AppendSignatureContainer operator()(Contain&& contain, Signature* dependency) {
@@ -67,7 +67,6 @@ namespace utils{
     /*
     template <typename Contain, typename AssistedSignature>
     struct SetWithAssisted {
-
     };
     */
 
