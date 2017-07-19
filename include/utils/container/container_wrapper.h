@@ -76,13 +76,11 @@ namespace utils{
         using OtherDep = typename OtherContain::Dep;
         using OtherCons = typename OtherContain::Cons;
         using OtherSig = typename OtherContain::Sig;
-
-        using NewDep
-        using NewCons
-        using NewSig
-
+        //check
+        using NewCons = concat_params<typename Contain::Cons, OtherCons>;
+        using NewDep = set_difference<merge_sets<typename Contain::Dep, OtherDep>, NewCons>;
+        using NewSig = AddSigs<typename Contain::Sig, OtherSig>;
         using NewContainer = ContainerImpl<NewDep, NewCons, NewSig>;
-
         NewContainer operator()(Contain&& contain, const OtherContain& otherContain) {
             contain.reflections.append(otherContain.reflections);
             return std::move(contain.reflections);
