@@ -92,10 +92,10 @@ namespace DIFrame {
             return SetWithDependency<This, Signature>()(std::move(*this), provider);
         }
 
-        template <typename OtherRs, typename OtherPs, typename OtherDeps>
-        resultOf<AppendContainer<M, ModuleImpl<OtherRs, OtherPs, OtherDeps>>, M&&, const ModuleImpl<OtherRs, OtherPs, OtherDeps>&>
-        appendContainer(const ModuleImpl<OtherRs, OtherPs, OtherDeps>& module) && {
-            return AppendContainer<M, ModuleImpl<OtherRs, OtherPs, OtherDeps>>()(std::move(*this), module);
+        template <typename OtherDeps, typename OtherCons, typename OtherSig>
+        resultOf<AppendContainer<This, ContainerImpl<OtherDeps, OtherCons, OtherSig>>, This&&, const ContainerImpl<OtherDeps, OtherCons, OtherSig>&>
+        appendContainer(const ContainerImpl<OtherDeps, OtherCons, OtherSig>& container) && {
+            return AppendContainer<This, ContainerImpl<OtherDeps, OtherCons, OtherSig>>()(std::move(*this), container);
         }
     };
 
